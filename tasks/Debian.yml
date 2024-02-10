@@ -1,0 +1,33 @@
+---
+- name: Update apt packages
+  become: true
+  become_user: root
+  ansible.builtin.apt:
+    upgrade: "no"
+    update_cache: true
+
+- name: Install python3-debian
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: python3-debian
+    state: present
+
+- name: Add jenkins apt repository
+  become: true
+  become_user: root
+  ansible.builtin.deb822_repository:
+    name: jenkins
+    types: [deb]
+    uris: https://pkg.jenkins.io/debian-stable
+    signed_by: "https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key"
+    suites: [binary/]
+    state: present
+    enabled: true
+
+- name: Update apt packages
+  become: true
+  become_user: root
+  ansible.builtin.apt:
+    upgrade: "no"
+    update_cache: true

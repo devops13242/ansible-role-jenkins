@@ -1,0 +1,26 @@
+---
+- name: Include task list in play
+  ansible.builtin.include_tasks: "{{ ansible_os_family }}.yml"
+
+- name: Install java
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - fontconfig
+    - "{{ java_package[ansible_os_family] }}"
+
+- name: Install jenkins
+  become: true
+  become_user: root
+  ansible.builtin.package:
+    name: jenkins
+    state: present
+
+- name: Start jenkins service
+  ansible.builtin.service:
+    name: jenkins
+    state: started
+    enabled: true

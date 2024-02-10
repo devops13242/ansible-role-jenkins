@@ -1,0 +1,13 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Run /usr/bin/jenkins --version
+      ansible.builtin.command: /usr/bin/jenkins --version
+      register: jenkins_version_output
+      changed_when: false
+
+    - name: Validate /usr/bin/jenkins --version rc
+      ansible.builtin.assert:
+        that: jenkins_version_output.rc == 0

@@ -1,0 +1,4 @@
+---
+java_package:
+  Debian: openjdk-17-jre
+  RedHat: java-17-openjdk
